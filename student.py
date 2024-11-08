@@ -332,7 +332,7 @@ class Student:
         # Fetch all data
         connection_obj.execute("SELECT * FROM students")
         student_data = connection_obj.fetchall()  # Corrected to fetchall()
-        print("Fetched data:", student_data)
+        # print("Fetched data:", student_data)  
 
         # Populate the table with values
         if len(student_data) != 0:
@@ -416,19 +416,23 @@ class Student:
         else:
              try:
                 delete_confirmation = messagebox.askyesno("Delete","Do you really want to Delete student details?",parent=self.root)
-                if delete_confirmation> 0:
+                
+                if delete_confirmation > 0:
                         connection = mysql.connector.connect(host="localhost", username="root", password="admin", database="snapattendance")
-                        connection_obj=connection.cursor()
-                        value = self.sid_data.get()
-                        sql = "DELETE from stuent WHERE student_id=%s"
-                        connection_obj.execute(sql,value)
+                        connection_obj = connection.cursor()
+                        value = (self.sid_data.get(),)  # Wrap value in a tuple
+                        sql = "DELETE FROM students WHERE student_id=%s"  # Corrected table name
+                        connection_obj.execute(sql, value)
+                        connection.commit()  # Commit the transaction
+                        self.fetch_data()
                 else:
                         if not delete_confirmation:
-                             return
-                connection.commit()
-                self.fetch_data()
-                connection.close()
-                messagebox.showinfo("Success","Successfully Deleted student details",parent=self.root)
+                                return
+
+                        connection.commit()
+                        self.fetch_data()
+                        connection.close()
+                        messagebox.showinfo("Success","Successfully Deleted student details",parent=self.root)
              except Exception as ex:
                         messagebox.showerror("Error", f"error: {str(ex)}",parent=self.root)
 
