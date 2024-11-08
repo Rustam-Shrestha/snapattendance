@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
+from student import Student 
 
 class Face_Recognition_System:
     def __init__(self, root):
@@ -39,13 +40,13 @@ class Face_Recognition_System:
         main_wallpaper_label.place(x=0, y=130, width=1380, height=680)
 
         # Title label
-        # title_label = Label(main_wallpaper_label, text="Snap Attendance", font=("Chomsky", 35, "bold"), bg='#888', fg="black")
-        # title_label.place(x=0, y=0, width=1380, height=50)
+        title_label = Label(main_wallpaper_label, text="Snap Attendance", font=("Chomsky", 35, "bold"), bg='#888', fg="black")
+        title_label.place(x=0, y=0, width=1380, height=50)
 
 #buttons at first row 
 
          # Add Student button
-        add_student_button = Button(main_wallpaper_label, text="Add Student", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
+        add_student_button = Button(main_wallpaper_label, text="Add Student", command=self.student_details, font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
         add_student_button.place(x=200, y=100)
 
          # face recognizer
@@ -76,6 +77,15 @@ class Face_Recognition_System:
         # Exit
         exit_button = Button(main_wallpaper_label, text="Exit", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
         exit_button.place(x=800, y=240)
+
+# functions for buttons
+    def student_details(self):
+        # function that starts new window as student file
+        self.new_window = Toplevel(self.root)
+        self.app = Student(self.new_window)
+
+
+
 
 
 
