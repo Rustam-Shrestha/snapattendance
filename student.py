@@ -3,6 +3,7 @@ from tkinter import ttk,messagebox
 from PIL import Image, ImageTk
 from tkcalendar import DateEntry
 import mysql.connector
+# import cv2
 # for this we need to install pip install mysql-connector-python
 
 
@@ -17,7 +18,7 @@ class Student:
         self.sem_data = StringVar()
         self.course_data = StringVar()
         self.sid_data = StringVar()
-        self.sname_data = StringVar()
+        self.name_data = StringVar()
         self.sroll_data = StringVar()
         self.sdob_data = StringVar()
         self.sgender_data = StringVar()
@@ -27,7 +28,7 @@ class Student:
 
 
         # First image
-        img = Image.open(r'C:\Users\Rustam Shrestha\OneDrive - Tribhuvan University\Documents\snapattendance\assets\panoramicwallpaper.png')
+        img = Image.open(r'D:\old documents\snapattendance\assets\panoramicwallpaper.png')
         img = img.resize((500, 130))
         # photo image insertion
         self.photoimg = ImageTk.PhotoImage(img)
@@ -35,7 +36,7 @@ class Student:
         wallpaper_label1.place(x=0, y=0, width=500, height=130)
 
         # Second image
-        img2 = Image.open(r'C:\Users\Rustam Shrestha\OneDrive - Tribhuvan University\Documents\snapattendance\assets\panoramicwallpaper.png')
+        img2 = Image.open(r'D:\old documents\snapattendance\assets\panoramicwallpaper.png')
         # resizing image itself to show in window and resampling is compressing image to show in window
         img2 = img2.resize((500, 130), Image.Resampling.LANCZOS)
         self.photoimg2 = ImageTk.PhotoImage(img2)
@@ -43,14 +44,14 @@ class Student:
         wallpaper_label2.place(x=500, y=0, width=500, height=130)
 
 # Third image
-        img3 = Image.open(r'C:\Users\Rustam Shrestha\OneDrive - Tribhuvan University\Documents\snapattendance\assets\panoramicwallpaper.png')
+        img3 = Image.open(r'D:\old documents\snapattendance\assets\panoramicwallpaper.png')
         img3 = img3.resize((500, 130), Image.Resampling.LANCZOS)
         self.photoimg3 = ImageTk.PhotoImage(img3)
         wallpaper_label3 = Label(self.root, image=self.photoimg3)
         wallpaper_label3.place(x=1000, y=0, width=500, height=130)
 
 # Background image
-        bg_img = Image.open(r'C:\Users\Rustam Shrestha\OneDrive - Tribhuvan University\Documents\snapattendance\assets\background.png')
+        bg_img = Image.open(r'D:\old documents\snapattendance\assets\background.png')
         bg_img = bg_img.resize((1380, 680), Image.Resampling.LANCZOS)
         self.photoimg_bg = ImageTk.PhotoImage(bg_img)
         main_wallpaper_label = Label(self.root, image=self.photoimg_bg)
@@ -68,7 +69,7 @@ class Student:
         left_frame = LabelFrame(frame, bd=4, relief=RIDGE, fg="black", text="Student Details", font=('consolas', 12, "bold"))
         left_frame.place(x=10, y=10, width=598, height=500)  # Added height for visibility
 # image under the left frame
-        img_left_panorama = Image.open(r'C:\Users\Rustam Shrestha\OneDrive - Tribhuvan University\Documents\snapattendance\assets\panoramicwallpaper_right.png')
+        img_left_panorama = Image.open(r'D:\old documents\snapattendance\assets\panoramicwallpaper_right.png')
         img_left_panorama = img_left_panorama.resize((600, 90), Image.Resampling.LANCZOS)
         self.panorama_left = ImageTk.PhotoImage(img_left_panorama)
         panorama_left_label = Label(left_frame, image=self.panorama_left)
@@ -78,16 +79,16 @@ class Student:
         current_course_frame.place(x=0, y=100, width=590, height=115)  # Added height for visibility
 
 # department dropdown
-        dept_label =Label(current_course_frame,text='Department',font=('consolas', 12, "bold"))
-        dept_label.grid(row=0, column=0, padx=10)
-        dept_combo = ttk.Combobox(current_course_frame,textvariable=self.dep_data, font=('consolas', 12, "bold"), width=17, state="readonly")
-        dept_combo['values']=('Select Department', "Data Science", "IOT", "Actuarial Science","Quantum Computing")
-        dept_combo.current(0)
-        dept_combo.grid(row=0, column=1, padx=4, pady=10)
+        department_label =Label(current_course_frame,text='Department',font=('consolas', 12, "bold"))
+        department_label.grid(row=0, column=0, padx=10)
+        department_combo = ttk.Combobox(current_course_frame,textvariable=self.dep_data, font=('consolas', 12, "bold"), width=17, state="readonly")
+        department_combo['values']=('Select Department', "Data Science", "IOT", "Actuarial Science","Quantum Computing")
+        department_combo.current(0)
+        department_combo.grid(row=0, column=1, padx=4, pady=10)
 
         
 # semester dropdown
-        semester_label =Label(current_course_frame,textvariable=self.sem_data,text='Semester',font=('consolas', 12, "bold"))
+        semester_label =Label(current_course_frame,text='Semester',font=('consolas', 12, "bold"))
         semester_label.grid(row=0, column=2, padx=4)
         semester_combo = ttk.Combobox(current_course_frame,textvariable=self.sem_data, font=('consolas', 12, "bold"), width=7, state="readonly")
         semester_combo['values']=('Select', "1st", "2nd", "3rd","4th", '5th', '6th')
@@ -113,16 +114,16 @@ class Student:
         # for sid
         class_student_frame = LabelFrame(left_frame, bd=4, relief=RIDGE, fg="black", text="Class Student", font=('consolas', 12, "bold"))
         class_student_frame.place(x=0, y=214, width=590, height=240)  # Added height for visibility
-        sid_label =Label(class_student_frame,text='Student Id',font=('consolas', 12, "bold"))
-        sid_label.grid(row=0, column=0, padx=4)
-        sid_entry = ttk.Entry(class_student_frame,textvariable=self.sid_data,width=13, font=('consolas', 12, "bold"))
-        sid_entry.grid(row=0, column=1, padx=4)
+        # sid_label =Label(class_student_frame,text='Student Id',font=('consolas', 12, "bold"))
+        # sid_label.grid(row=0, column=0, padx=4)
+        # sid_entry = ttk.Entry(class_student_frame,textvariable=self.sid_data,width=13, font=('consolas', 12, "bold"))
+        # sid_entry.grid(row=0, column=1, padx=4)
 # class student information
         # for name
-        sname_label =Label(class_student_frame,text='Student Name',font=('consolas', 12, "bold"))
-        sname_label.grid(row=0, column=2, padx=4)
-        sname_entry = ttk.Entry(class_student_frame,textvariable=self.sname_data,width=13, font=('consolas', 12, "bold"))
-        sname_entry.grid(row=0, column=3, padx=4)
+        name_label =Label(class_student_frame,text='Student Name',font=('consolas', 12, "bold"))
+        name_label.grid(row=0, column=2, padx=4)
+        name_entry = ttk.Entry(class_student_frame,textvariable=self.name_data,width=13, font=('consolas', 12, "bold"))
+        name_entry.grid(row=0, column=3, padx=4)
 
 # next row
         # for rollnumber
@@ -153,11 +154,21 @@ class Student:
         sphone_entry.grid(row=3, column=3, padx=4)
 
 # next row
-        # for address
-        sadress_label =Label(class_student_frame,text='Address', width=10,font=('consolas', 12, "bold"))
+       # Label for Address
+        sadress_label = Label(
+            class_student_frame, text='Address', width=10, 
+            font=('Consolas', 12, "bold")
+        )
         sadress_label.grid(row=4, column=0, padx=4)
-        sadress_entry = ttk.Entry(class_student_frame,textvariable=self.saddress_data,width=13, font=('consolas', 12, "bold"), background='darkblue', foreground='white')
+
+        # Entry for Address (using tk.Entry instead of ttk.Entry to allow background and foreground settings)
+        sadress_entry = Entry(
+            class_student_frame, textvariable=self.saddress_data, 
+            width=13, font=('Consolas', 12, "bold"), 
+            bg='white', fg='black', insertbackground='black'
+        )
         sadress_entry.grid(row=4, column=1, padx=4)
+
 
         snap_label =Label(class_student_frame,text='Snap photo',width=13,font=('consolas', 12, "bold"))
         snap_label.grid(row=4, column=2, padx=2)
@@ -180,7 +191,7 @@ class Student:
         delete_button = Button(class_student_frame, text='Delete',command=self.delete_data, bg="#dc143c", fg="white", font=('consolas', 12, "bold"), cursor="hand2")
         delete_button.grid(row=6, column=2, padx=4,pady=9, sticky='w')
        # reset button
-        reset_button = Button(class_student_frame, text='Reset', bg="#dc143c", fg="white", font=('consolas', 12, "bold"), cursor="hand2")
+        reset_button = Button(class_student_frame, text='Reset',command=self.reset_data, bg="#dc143c", fg="white", font=('consolas', 12, "bold"), cursor="hand2")
         reset_button.grid(row=6, column=3, padx=4,pady=9, sticky='w')
 
        #t photo sample takingbutton
@@ -233,7 +244,7 @@ class Student:
         self.student_table.heading("Department", text="Department")
         self.student_table.heading("course", text="Course")
         self.student_table.heading("semester", text="Semester")
-        self.student_table.heading("id", text="ID")
+        # self.student_table.heading("id", text="ID")
         self.student_table.heading("name", text="Name")
         self.student_table.heading("roll no", text="Roll No")
         self.student_table.heading("gender", text="Gender")
@@ -269,7 +280,7 @@ class Student:
         self.student_table.heading("Department", text="Department")
         self.student_table.heading("course", text="Course")
         self.student_table.heading("semester", text="Semester")
-        self.student_table.heading("id", text="ID")
+        # self.student_table.heading("id", text="ID")
         self.student_table.heading("name", text="Name")
         self.student_table.heading("roll no", text="Roll No")
         self.student_table.heading("gender", text="Gender")
@@ -282,7 +293,7 @@ class Student:
         self.student_table.column("Department", width=100)
         self.student_table.column("course", width=100)
         self.student_table.column("semester", width=70)
-        self.student_table.column("id", width=30)
+        # self.student_table.column("id", width=30)
         self.student_table.column("name", width=100)
         self.student_table.column("roll no", width=70)
         self.student_table.column("gender", width=70)
@@ -299,17 +310,40 @@ class Student:
         # function for taking and adding data
     def add_data(self):
         if ( self.dep_data.get()=="Select Department" or  self.sem_data.get()=="Select" or  self.course_data.get()=="Select Courses" or
-                        self.sid_data.get()=="" or  self.sname_data.get()=="" or  self.sroll_data.get()=="" or
+                         self.name_data.get()=="" or  self.sroll_data.get()=="" or
                         self.sdob_data.get()=="" or  self.sgender_data.get()=="" or  self.sphone_data.get()== "" or
                         self.saddress_data.get()==""):
                 messagebox.showerror("Error", "All fields must be filled out", parent=self.root)
         else:
             try:
-                connection = mysql.connector.connect(host="localhost", username="root", password="admin", database="snapattendance")
+                connection = mysql.connector.connect(
+   host="localhost",
+username="root",
+password="",
+database="snapattendance",
+port=3306
+)
+
                 connection_obj=connection.cursor()
-                connection_obj.execute("INSERT INTO students VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(self.dep_data.get(),self.course_data.get(),self.sem_data.get(),self.sid_data.get(),self.sname_data.get(),self.sroll_data.get(),self.sgender_data.get(),self.sdob_data.get(),self.sphone_data.get(), self.saddress_data.get(), self.yes_photo.get()))
+                connection_obj.execute(
+    "INSERT INTO students VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+    (
+        self.dep_data.get(),
+        self.course_data.get(),
+        self.sem_data.get(),
+        self.name_data.get(),
+        self.sroll_data.get(),
+        self.sgender_data.get(),
+        self.sdob_data.get(),
+        self.sphone_data.get(),
+        self.saddress_data.get(),
+        self.yes_photo.get()
+    )
+)
+
                 connection.commit()
                 self.fetch_data()
+                self.reset_data()
                 connection.close()
                 messagebox.showinfo("Success","Student details have been saved successfully",parent=self.root)
             except Exception as ex:
@@ -324,7 +358,7 @@ class Student:
         connection = mysql.connector.connect(
                 host="localhost", 
                 username="root", 
-                password="admin", 
+                password="", 
                 database="snapattendance"
         )
         connection_obj = connection.cursor()
@@ -347,43 +381,47 @@ class Student:
         connection.close()
     
 #     getr all the data to the input fields 
-    def get_data(self,event=""):
+    def get_data(self, event=""):
         db_data = self.student_table.focus()
-        content= self.student_table.item(db_data)
-        data=content['values']
-        self.dep_data.set(data[0])
-        self.course_data.set(data[1])
-        self.sem_data.set(data[2])
-        self.sid_data.set(data[3])
-        self.sname_data.set(data[4])
-        self.sroll_data.set(data[5])
-        self.sgender_data.set(data[6])
-        self.sdob_data.set(data[7])
-        self.sphone_data.set(data[8])
-        self.saddress_data.set(data[9])
-        self.yes_photo.set(data[10])
+        content = self.student_table.item(db_data)
+        data = content['values']
+        # Updated field mapping as per the new order
+        self.name_data.set(data[0])         # Name
+        self.sroll_data.set(data[1])        # Roll No
+        self.sgender_data.set(data[2])      # Gender
+        self.sdob_data.set(data[3])         # DOB
+        self.sphone_data.set(data[4])       # Phone
+        self.saddress_data.set(data[5])     # Address
+        self.dep_data.set(data[6])          # Department
+        self.course_data.set(data[7])       # Course
+        self.sem_data.set(data[8])          # Semester
+        self.yes_photo.set(data[9])         # Photo Sample
 
 # updating funciton
     def update_data(self):
+        # update the data as per the command 
+        # if someone tries to update using null data and the data not permitted that will be detained while keeping the 
+        # normal data in the database safe
         if ( self.dep_data.get()=="Select Department" or  self.sem_data.get()=="Select" or  self.course_data.get()=="Select Courses" or
-                self.sid_data.get()=="" or  self.sname_data.get()=="" or  self.sroll_data.get()=="" or
+                  self.name_data.get()=="" or  self.sroll_data.get()=="" or
                 self.sdob_data.get()=="" or  self.sgender_data.get()=="" or  self.sphone_data.get()== "" or
                 self.saddress_data.get()==""):
              messagebox.showerror("Error", "All fields must be filled out", parent=self.root)
         else:
              try:
+                # catching any error that cones whel we are updatiing the data
                 update_confirmation = messagebox.askyesno("Update","Do you really want to update student details?",parent=self.root)
                 if update_confirmation> 0:
-                        connection = mysql.connector.connect(host="localhost", username="root", password="admin", database="snapattendance")
+                        # while we hare suposed to be having the connection with the correct credentials 
+                        connection = mysql.connector.connect(host="localhost", username="root", password="", database="snapattendance")
                         connection_obj=connection.cursor()
                         connection_obj.execute(
-    "UPDATE students SET dept=%s, course=%s, semester=%s, student_id=%s, sname=%s, roll=%s, gender=%s, dob=%s, phone=%s, address=%s, photo_sample=%s WHERE student_id=%s",
+    "UPDATE students SET department=%s, course=%s, semester=%s, id=%s, name=%s, roll_no=%s, gender=%s, dob=%s, phone=%s, address=%s, photo_sample=%s WHERE id=%s",
     (
         self.dep_data.get(),
         self.course_data.get(),
         self.sem_data.get(),
-        self.sid_data.get(),
-        self.sname_data.get(),
+        self.name_data.get(),
         self.sroll_data.get(),
         self.sgender_data.get(),
         self.sdob_data.get(),
@@ -402,6 +440,7 @@ class Student:
                 messagebox.showinfo("Success","Successfully updated student details",parent=self.root)
                 connection.commit()
                 self.fetch_data()
+                self.reset_data()
                 connection.close()
              except Exception as ex:
                         messagebox.showerror("Error", f"error: {str(ex)}",parent=self.root)
@@ -418,10 +457,10 @@ class Student:
                 delete_confirmation = messagebox.askyesno("Delete","Do you really want to Delete student details?",parent=self.root)
                 
                 if delete_confirmation > 0:
-                        connection = mysql.connector.connect(host="localhost", username="root", password="admin", database="snapattendance")
+                        connection = mysql.connector.connect(host="localhost", username="root", password="", database="snapattendance")
                         connection_obj = connection.cursor()
-                        value = (self.sid_data.get(),)  # Wrap value in a tuple
-                        sql = "DELETE FROM students WHERE student_id=%s"  # Corrected table name
+                        value = (self.sid_data.get(),)  # Wrap value in a tuple if nt tuple then it will create error 
+                        sql = "DELETE FROM students WHERE id=%s"  # Corrected table name
                         connection_obj.execute(sql, value)
                         connection.commit()  # Commit the transaction
                         self.fetch_data()
@@ -431,14 +470,74 @@ class Student:
 
                         connection.commit()
                         self.fetch_data()
+                        self.reset_data()
                         connection.close()
                         messagebox.showinfo("Success","Successfully Deleted student details",parent=self.root)
              except Exception as ex:
                         messagebox.showerror("Error", f"error: {str(ex)}",parent=self.root)
 
                         connection.commit()
-                       
-                       
+
+        # RESETTING THE DATA IN THE INUT BOXES
+    def reset_data(self):
+        self.dep_data.set("Select Department")
+        self.course_data.set("Select Courses")
+        self.sem_data.set("Select")
+        self.sid_data.set("")
+        self.name_data.set("")
+        self.sroll_data.set("")
+        self.sgender_data.set("Neuter")
+        self.sdob_data.set("")
+        self.sphone_data.set("")
+        self.saddress_data.set("")
+        self.yes_photo.set("")
+
+        # Generating dataset by taking photo sample of student
+        # we need to make labelled  dataasetr so we need to associate photo with sid
+        # /creating will give duplicate primary key erro rso we need updateoperaion
+        def generate_dataset(self):
+              if ( self.dep_data.get()=="Select Department" or  self.sem_data.get()=="Select" or  self.course_data.get()=="Select Courses" or
+                self.sid_data.get()=="" or  self.name_data.get()=="" or  self.sroll_data.get()=="" or
+                self.sdob_data.get()=="" or  self.sgender_data.get()=="" or  self.sphone_data.get()== "" or
+                self.saddress_data.get()==""):
+                messagebox.showerror("Error", "All fields must be filled out", parent=self.root)
+              else:
+                try:
+                    # while we hare suposed to be having the connection with the correct credentials 
+                    connection = mysql.connector.connect(host="localhost", username="root", password="", database="snapattendance")
+                    connection_obj=connection.cursor()
+                    connection_obj.execute("SELECT * FROM students")
+                    #STORING THE DATA IN THE VAIRABLE  
+                    result = connection_obj.fetchall()
+                    id=0
+                    for row in result:
+                        id+=1
+                    connection_obj.execute(
+    "UPDATE students SET department=%s, course=%s, semester=%s, id=%s, name=%s, roll=%s, gender=%s, dob=%s, phone=%s, address=%s, photo_sample=%s WHERE id=%s",
+                        (
+                                self.dep_data.get(),
+                                self.course_data.get(),
+                                self.sem_data.get(),
+                                self.sid_data.get(),
+                                self.name_data.get(),
+                                self.sroll_data.get(),
+                                self.sgender_data.get(),
+                                self.sdob_data.get(),
+                                self.sphone_data.get(),
+                                self.saddress_data.get(),
+                                self.yes_photo.get(),
+                                self.sid_data.get()  
+                                # the student_id is the primary key and used to identify the record to update
+                                # sow riting it last to be updated
+                        )
+                        )
+                    connection.commit()
+                    self.reset_data()
+                    connection.close()
+                except Exception as ex:
+                        messagebox.showerror("Error", f"error: {str(ex)}",parent=self.root)
+
+                        connection.commit()
 
 if __name__ == '__main__':
     root = Tk()

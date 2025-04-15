@@ -1,95 +1,102 @@
+# Import necessary modules
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
-from student import Student 
+from tkcalendar import DateEntry  # For selecting dates easily
 
+# Student class definition
+class Student:
+    def __init__(self, root):
+        """Initializes the student management window"""
+        self.root = root
+        self.root.geometry("900x500+250+100")  # Set window size and position
+        self.root.title("Student Management System")
+
+        # Background Label
+        self.bg_label = Label(self.root, text="Student Management", font=("JetBrains Mono", 20, "bold"), bg="#0f4c75", fg="white")
+        self.bg_label.pack(fill=X)
+
+        # Label and Entry for Student Name
+        name_label = Label(self.root, text="Name:", font=("Arial", 14))
+        name_label.place(x=50, y=80)
+        self.name_entry = Entry(self.root, font=("Arial", 14))
+        self.name_entry.place(x=200, y=80, width=200)
+
+        # Label and Calendar for Date of Birth
+        dob_label = Label(self.root, text="Date of Birth:", font=("Arial", 14))
+        dob_label.place(x=50, y=130)
+        self.dob_entry = DateEntry(self.root, font=("Arial", 14), date_pattern="yyyy-mm-dd")
+        self.dob_entry.place(x=200, y=130, width=200)
+
+        # Gender Dropdown
+        gender_label = Label(self.root, text="Gender:", font=("Arial", 14))
+        gender_label.place(x=50, y=180)
+        self.gender_combo = ttk.Combobox(self.root, font=("Arial", 14), state="readonly", values=["Male", "Female", "Other"])
+        self.gender_combo.place(x=200, y=180, width=200)
+        self.gender_combo.current(0)
+
+        # Save Button
+        save_button = Button(self.root, text="Save", font=("Arial", 14, "bold"), bg="green", fg="white", command=self.save_student)
+        save_button.place(x=200, y=230, width=100)
+
+    def save_student(self):
+        """Handles saving student details (Placeholder function)"""
+        name = self.name_entry.get()
+        dob = self.dob_entry.get()
+        gender = self.gender_combo.get()
+        print(f"Student Details: Name: {name}, DOB: {dob}, Gender: {gender}")
+
+# Main Application Class
 class Face_Recognition_System:
     def __init__(self, root):
+        """Initializes the face recognition system UI"""
         self.root = root
         self.root.geometry('1300x680+10+28')
         self.root.title('Face Recognition System')
 
-        # First image
-        img = Image.open(r'C:\Users\Rustam Shrestha\OneDrive - Tribhuvan University\Documents\snapattendance\assets\panoramicwallpaper.png')
-        img = img.resize((500, 130))
-        # photo image insertion
-        self.photoimg = ImageTk.PhotoImage(img)
-        wallpaper_label1 = Label(self.root, image=self.photoimg)
-        wallpaper_label1.place(x=0, y=0, width=500, height=130)
+        # Load the first header image
+        img1 = Image.open("assets/panoramicwallpaper.png").resize((500, 130))
+        self.photoimg1 = ImageTk.PhotoImage(img1)
+        Label(self.root, image=self.photoimg1).place(x=0, y=0, width=500, height=130)
 
-        # Second image
-        img2 = Image.open(r'C:\Users\Rustam Shrestha\OneDrive - Tribhuvan University\Documents\snapattendance\assets\panoramicwallpaper.png')
-        # resizing image itself to show in window and resampling is compressing image to show in window
-        img2 = img2.resize((500, 130), Image.Resampling.LANCZOS)
+        # Load the second header image
+        img2 = Image.open("assets/panoramicwallpaper.png").resize((500, 130))
         self.photoimg2 = ImageTk.PhotoImage(img2)
-        wallpaper_label2 = Label(self.root, image=self.photoimg2)
-        wallpaper_label2.place(x=500, y=0, width=500, height=130)
+        Label(self.root, image=self.photoimg2).place(x=500, y=0, width=500, height=130)
 
-# Third image
-        img3 = Image.open(r'C:\Users\Rustam Shrestha\OneDrive - Tribhuvan University\Documents\snapattendance\assets\panoramicwallpaper.png')
-        img3 = img3.resize((500, 130), Image.Resampling.LANCZOS)
+        # Load the third header image
+        img3 = Image.open("assets/panoramicwallpaper.png").resize((500, 130))
         self.photoimg3 = ImageTk.PhotoImage(img3)
-        wallpaper_label3 = Label(self.root, image=self.photoimg3)
-        wallpaper_label3.place(x=1000, y=0, width=500, height=130)
+        Label(self.root, image=self.photoimg3).place(x=1000, y=0, width=500, height=130)
 
-# Background image
-        bg_img = Image.open(r'C:\Users\Rustam Shrestha\OneDrive - Tribhuvan University\Documents\snapattendance\assets\background.png')
-        bg_img = bg_img.resize((1380, 680), Image.Resampling.LANCZOS)
+        # Load background image
+        bg_img = Image.open("assets/background.png").resize((1380, 680))
         self.photoimg_bg = ImageTk.PhotoImage(bg_img)
-        main_wallpaper_label = Label(self.root, image=self.photoimg_bg)
-        main_wallpaper_label.place(x=0, y=130, width=1380, height=680)
+        Label(self.root, image=self.photoimg_bg).place(x=0, y=130, width=1380, height=680)
 
-        # Title label
-        title_label = Label(main_wallpaper_label, text="Snap Attendance", font=("Chomsky", 35, "bold"), bg='#888', fg="black")
-        title_label.place(x=0, y=0, width=1380, height=50)
+        # Title Label
+        title_label = Label(self.root, text="Snap Attendance", font=("Chomsky", 35, "bold"), bg='#888', fg="black")
+        title_label.place(x=0, y=130, width=1380, height=50)
 
-#buttons at first row 
+        # Row 1 Buttons
+        Button(self.root, text="Add Student", command=self.student_details, font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15).place(x=200, y=200)
+        Button(self.root, text="Detect Face", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15).place(x=400, y=200)
+        Button(self.root, text="Take Attendance", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15).place(x=600, y=200)
+        Button(self.root, text="Need Assistance", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15).place(x=800, y=200)
 
-         # Add Student button
-        add_student_button = Button(main_wallpaper_label, text="Add Student", command=self.student_details, font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
-        add_student_button.place(x=200, y=100)
+        # Row 2 Buttons
+        Button(self.root, text="Train Model", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15).place(x=200, y=280)
+        Button(self.root, text="Trained Photos", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15).place(x=400, y=280)
+        Button(self.root, text="Developer", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15).place(x=600, y=280)
+        Button(self.root, text="Exit", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15, command=self.root.quit).place(x=800, y=280)
 
-         # face recognizer
-        detect_face_button = Button(main_wallpaper_label, text="Detect Face", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
-        detect_face_button.place(x=400, y=100)
-
-         # attencdance
-        attendance_button = Button(main_wallpaper_label, text="Take Attendance", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
-        attendance_button.place(x=600, y=100)
-
-         # Help button
-        help_button = Button(main_wallpaper_label, text="Need Assistance", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
-        help_button.place(x=800, y=100)
-
-#buttons at second row  
-        # Train System
-        train_button = Button(main_wallpaper_label, text="Train Model", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
-        train_button.place(x=200, y=240)
-
-        # Train System
-        photos_button = Button(main_wallpaper_label, text="Trained Photos", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
-        photos_button.place(x=400, y=240)
-
-        # Developer
-        developer_button = Button(main_wallpaper_label, text="Developer", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
-        developer_button.place(x=600, y=240)
-
-        # Exit
-        exit_button = Button(main_wallpaper_label, text="Exit", font=("Jetbrains Mono", 15, "bold"), bg='#dc143c', fg='white', cursor='hand2', width=15)
-        exit_button.place(x=800, y=240)
-
-# functions for buttons
     def student_details(self):
-        # function that starts new window as student file
+        """Opens the Student Management Window"""
         self.new_window = Toplevel(self.root)
         self.app = Student(self.new_window)
 
-
-
-
-
-
+# Run Application
 if __name__ == '__main__':
     root = Tk()
-    obj = Face_Recognition_System(root)
+    app = Face_Recognition_System(root)
     root.mainloop()
